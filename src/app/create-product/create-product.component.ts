@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct, IProductField } from '../shared/shared.interface';
 import { sharedService } from '../shared/shared.service';
@@ -13,6 +13,8 @@ export class CreateProductComponent implements OnInit {
   selectedProduct: IProduct;
   productFieldsList: IProductField[] = [];
   productFormGroup: FormGroup = new FormGroup({});
+
+  addedProductList = [];
   constructor(  private route: ActivatedRoute,
     private router: Router,
     private sharedService: sharedService  ) { }
@@ -28,7 +30,19 @@ export class CreateProductComponent implements OnInit {
     this.sharedService.getProducts(url).subscribe((response: IProductField[]) => {
       this.productFieldsList = response;
       this.productFieldsList.forEach(prodObj => {
-        let control = new FormControl(prodObj.defaultValue);
+        let control: FormControl;
+        
+        if(prodObj.type == 'bool' && typeof prodObj.defaultValue === 'string') {
+          let boolVal = prodObj.defaultValue.toLowerCase() == 'false'? false : true;
+          control = new FormControl(boolVal);
+        } else {
+          control = new FormControl(prodObj.defaultValue);
+        }
+        
+
+        if(prodObj.mandatory) 
+        control.setValidators(Validators.required);
+
         this.productFormGroup.addControl(prodObj.caption, control);
       });
 

@@ -1,18 +1,50 @@
-
 <app-top-bar></app-top-bar>
-<form [formGroup]="productFormGroup" (ngSubmit)="onSubmit()">
-	<div *ngFor="let form_elem of productFieldsList">
-		<div [ngSwitch]="form_elem.type">
-			<div class="p-2 m-2" *ngSwitchCase="'text'">
-				<input class="form-control" type="text" [formControlName]="form_elem.caption"/>
+<div class="border-bottom w-100 mt-2 p-2">
+    <div class="w-100 p-2"><b>Add {{selectedProduct.name}}</b> <a  class="btn btn-outline-primary float-right" href="#" role="button">BACK</a></div>
+   
+</div>
+<div class="container mt-2">
+    <div class="card">
+
+        <div class="card-body">
+            <form [formGroup]="productFormGroup" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let form_elem of productFieldsList">
+
+                        <div [ngSwitch]="form_elem.type">
+                            <div class="form-group" *ngSwitchCase="'text'">
+                                <label for="">{{form_elem.caption}} <sup *ngIf="form_elem.mandatory" class="sup_mandatory">*</sup></label>
+                                <input type="text" name="" id="" class="form-control" placeholder=""
+                                    [formControlName]="form_elem.caption" >
+                                <small *ngIf="form_elem.mandatory && productFormGroup.get(form_elem.caption).errors && productFormGroup.get(form_elem.caption).touched
+                                && productFormGroup.get(form_elem.caption).errors.required" class="text-danger">{{form_elem.validationMessage}}</small>
+                            </div>
+                          
+                            <div class="form-group" *ngSwitchCase="'int'">
+                                <label for="">{{form_elem.caption}} <sup *ngIf="form_elem.mandatory" class="sup_mandatory">*</sup></label>
+                                <input type="number" name="" id="" class="form-control" placeholder=""
+                                    [formControlName]="form_elem.caption" aria-describedby="helpId">
+                                <small *ngIf="form_elem.mandatory && productFormGroup.get(form_elem.caption).errors && productFormGroup.get(form_elem.caption).touched
+                                && productFormGroup.get(form_elem.caption).errors.required" class="text-danger">{{form_elem.validationMessage}}</small>
+                            </div>
+                           
+                            <div class="form-check" *ngSwitchCase="'bool'">
+                                <label class="form-check-label">
+                                    <input type="checkbox" class="form-check-input" name="" id=""
+                                        [formControlName]="form_elem.caption">
+                                    {{form_elem.caption}}
+                                </label>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">  <button type="submit" class="btn btn-outline-primary"
+                    [disabled]="!productFormGroup.valid">ADD {{selectedProduct.name}}</button></div>
+              
+                <!-- <button class="btn btn-outline-primary" type="submit" value="ADD PRODUCT" /> -->
+            </form>
+        </div>
     </div>
-				<div class="p-2 m-2" *ngSwitchCase="'int'">
-					<input class="form-control"  type="number" [formControlName]="form_elem.caption"/>
-    </div>
-					<div class="p-2 m-2" *ngSwitchCase="'bool'">
-						<input class="form-control"  type="checkbox" [formControlName]="form_elem.caption"/>
-    </div>
-					</div>
-				</div>
-				<input type="submit" value="save"/>
-</form>
+
+</div>
