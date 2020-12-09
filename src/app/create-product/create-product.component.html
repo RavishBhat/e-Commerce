@@ -1,0 +1,18 @@
+
+<app-top-bar></app-top-bar>
+<form [formGroup]="productFormGroup" (ngSubmit)="onSubmit()">
+	<div *ngFor="let form_elem of productFieldsList">
+		<div [ngSwitch]="form_elem.type">
+			<div class="p-2 m-2" *ngSwitchCase="'text'">
+				<input class="form-control" type="text" [formControlName]="form_elem.caption"/>
+    </div>
+				<div class="p-2 m-2" *ngSwitchCase="'int'">
+					<input class="form-control"  type="number" [formControlName]="form_elem.caption"/>
+    </div>
+					<div class="p-2 m-2" *ngSwitchCase="'bool'">
+						<input class="form-control"  type="checkbox" [formControlName]="form_elem.caption"/>
+    </div>
+					</div>
+				</div>
+				<input type="submit" value="save"/>
+</form>

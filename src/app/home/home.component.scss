@@ -1,0 +1,16 @@
+.num_width {
+    max-width: 50px;
+    position: absolute;
+    top: 0;
+    left: 5px;
+    height: inherit;
+    padding-bottom: 7px;
+
+    span {
+        padding: 5px;
+        color: whitesmoke;
+        background: #00048e;
+        border-radius: 1px 1px 15px 15px;
+        box-shadow: 2px 2px 1px 0px #a0a0a0;
+    }
+}
