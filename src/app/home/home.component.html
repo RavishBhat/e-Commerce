@@ -1,7 +1,11 @@
 <app-top-bar></app-top-bar>
 <div class="border-bottom w-100 mt-2 p-2"><h4>Products</h4></div>
 <div class="container">
-   
+    <div class="card m-2 " *ngIf="!productsList.length">
+        <div class="card-body loading">          
+        
+        </div>
+    </div>
     <div class="card m-2" *ngFor="let item of productsList;let i=index">
         <div class="card-body">
             <div class="float-left num_width"><span>{{i+1}}</span></div>
@@ -9,5 +13,7 @@
          <button type="button" class="btn btn-outline-primary float-right" (click)="routeToAddProd(item)">ADD {{item.name}}</button>
         </div>
     </div>
+
+    
 </div>
 

@@ -15,42 +15,45 @@ export class CreateProductComponent implements OnInit {
   productFormGroup: FormGroup = new FormGroup({});
 
   addedProductList = [];
-  constructor(  private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private router: Router,
-    private sharedService: sharedService  ) { }
+    private sharedService: sharedService) { }
 
   ngOnInit(): void {
-    const product = this.route.snapshot.paramMap.get('item');
+    const product = this.route.snapshot.paramMap.get('item'); 
+
     this.selectedProduct = JSON.parse(product);
     this.getProductFeilds(this.selectedProduct.definitionUrl);
-    console.log(this.selectedProduct)
   }
 
+  //Get Product form feilds
   getProductFeilds(url) {
     this.sharedService.getProducts(url).subscribe((response: IProductField[]) => {
       this.productFieldsList = response;
       this.productFieldsList.forEach(prodObj => {
         let control: FormControl;
-        
-        if(prodObj.type == 'bool' && typeof prodObj.defaultValue === 'string') {
-          let boolVal = prodObj.defaultValue.toLowerCase() == 'false'? false : true;
+
+        //If bool change the data type of --defaultValue
+        if (prodObj.type == 'bool' && typeof prodObj.defaultValue === 'string') {
+          let boolVal = prodObj.defaultValue.toLowerCase() == 'false' ? false : true;
           control = new FormControl(boolVal);
         } else {
           control = new FormControl(prodObj.defaultValue);
         }
-        
 
-        if(prodObj.mandatory) 
-        control.setValidators(Validators.required);
+        //If mandatory set validator to control
+        if (prodObj.mandatory)
+          control.setValidators(Validators.required);
 
-        this.productFormGroup.addControl(prodObj.caption, control);
+        this.productFormGroup.addControl(prodObj.caption, control); // Add control to form group
       });
-
-      console.log(this.productFormGroup);
+    },err=>{
+      console.log(err);
     });
   }
 
   onSubmit() {
+    this.addedProductList.push(this.productFormGroup.value);   //On form submit push to table
     console.log(this.productFormGroup.value);
   }
 

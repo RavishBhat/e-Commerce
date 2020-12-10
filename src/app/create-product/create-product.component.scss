@@ -1,5 +1,14 @@
- .sup_mandatory{
-    top: -3px;
-    color: red;
-    font-weight: 500;
- }
+.sup_mandatory{
+   top: -3px;
+   color: red;
+   font-weight: 500;
+}
+
+.card {
+   min-height: 15rem;
+}
+.card-body .loading {
+   width: 100%;
+}
+
+ 

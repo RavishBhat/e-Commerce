@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     this.getProducts();
   }
 
+  //Get All products from api end point
   getProducts() {
     let url = environment.apiEndPoint;
     this.sharedService.getProducts(url).subscribe((response: IProduct[]) => {
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  //Route navigator to add product view
   routeToAddProd(obj) {
     this.router.navigate(['/create-prod',{ item: JSON.stringify(obj)}]);
   }

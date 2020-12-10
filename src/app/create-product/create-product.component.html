@@ -1,12 +1,12 @@
 <app-top-bar></app-top-bar>
 <div class="border-bottom w-100 mt-2 p-2">
-    <div class="w-100 p-2"><b>Add {{selectedProduct.name}}</b> <a  class="btn btn-outline-primary float-right" href="#" role="button">BACK</a></div>
+    <div class="w-100 p-2"><b>Add {{selectedProduct.name}}</b> <a  class="btn btn-outline-primary float-right" routerLink="/home" role="button">BACK</a></div>
    
 </div>
 <div class="container mt-2">
     <div class="card">
 
-        <div class="card-body">
+        <div class="card-body " [ngClass]="{'loading': !productFieldsList.length}">
             <form [formGroup]="productFormGroup" (ngSubmit)="onSubmit()">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12" *ngFor="let form_elem of productFieldsList">
@@ -39,12 +39,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="row text-center">  <button type="submit" class="btn btn-outline-primary"
+                <div class="text-center" *ngIf="productFieldsList.length">  <button type="submit" class="btn btn-outline-primary"
                     [disabled]="!productFormGroup.valid">ADD {{selectedProduct.name}}</button></div>
               
                 <!-- <button class="btn btn-outline-primary" type="submit" value="ADD PRODUCT" /> -->
             </form>
         </div>
     </div>
+
+    <table class="table border mt-2" *ngIf="addedProductList.length">
+        <thead>
+            <tr>
+                <th  *ngFor="let form_elem of productFieldsList">{{form_elem.caption}}</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prodObj of addedProductList">
+                <td scope="row"  *ngFor="let form_elem of productFieldsList">{{prodObj[form_elem.caption]}}</td>
+               
+            </tr>
+         
+        </tbody>
+    </table>
 
 </div>
